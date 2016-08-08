@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                            http://www.springframework.org/schema/mvc
+                            http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+                            http://www.springframework.org/schema/context
+                            http://www.springframework.org/schema/context/spring-context-3.1.xsd"
+       default-lazy-init="true" default-autowire="byName">
+
+    <context:property-placeholder location="classpath*:*.properties"/>
+    <!-- 启用spring mvc 注解 -->
+    <context:annotation-config/>
+    <!-- 1：对web包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能 -->
+    <context:component-scan base-package="com.github.liuxboy.velocity.demo.controller"/>
+    <!-- 2: 完成请求和注解POJO的映射 -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
+
+    <bean id="mappingJacksonHttpMessageConverter"
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+    <!-- 3：默认注解-->
+    <mvc:annotation-driven />
+    <!-- 4：静态文件 -->
+    <mvc:resources mapping="/js/**" location="/static/js/"/>
+    <mvc:resources mapping="/css/**" location="/static/css/"/>
+    <mvc:resources mapping="/image/**" location="/static/image/"/>
+
+    <!-- 5：对模型视图名称的解析，即在模型视图名称添加前后缀 -->
+    <!-- template view -->
+    <bean id="velocityConfig"
+          class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath" value="/WEB-INF/views/" />
+        <property name="velocityProperties">
+            <props>
+                <prop key="input.encoding">UTF-8</prop>
+                <prop key="output.encoding">UTF-8</prop>
+                <prop key="contentType">text/html;charset=UTF-8</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="velocityViewResolver"
+          class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+        <property name="layoutUrl" value="layout/default.vm" />
+        <property name="cache" value="false" />
+        <property name="suffix" value=".vm" />
+        <property name="exposeSpringMacroHelpers" value="true" />
+        <property name="dateToolAttribute" value="dateTool" />
+        <property name="numberToolAttribute" value="numberTool" />
+        <property name="contentType" value="text/html;charset=UTF-8" />
+    </bean>
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/view/" p:suffix=".jsp"/>
+    <!-- 6：配置拦截ctrl的参数 -->
+    <bean class="com.github.liuxboy.velocity.demo.controller.ParamNotValidExceptionResolver"/>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean id="baseInterceptor" class="com.github.liuxboy.velocity.demo.controller.BaseInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+</beans>
