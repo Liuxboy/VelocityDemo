@@ -1,9 +1,31 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 	<head>
+        <script language="javascript">
+			function query() {
 
+            }
+		</script>
 	</head>
 	<body>
-
+		<h2>Welcome $!user.name, you are $!user.age</h2>
+		<table>
+			<thead>
+				<tr>
+					<th class="center">#springMessage('user.id')</th>
+					<th class="center">#springMessage('user.name')</th>
+					<th class="center">#springMessage('user.age')</th>
+				</tr>
+			</thead>
+			<tbody>
+				#foreach( $item in $dataList)
+				<tr>
+					<td>$!item.id</td>
+					<td>$!item.name</td>
+					<td>$!item.age</td>
+				</tr>
+				#end
+			</tbody>
+		</table>
 	</body>
 </html>
