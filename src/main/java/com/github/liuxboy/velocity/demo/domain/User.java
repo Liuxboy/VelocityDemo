@@ -1,6 +1,7 @@
 package com.github.liuxboy.velocity.demo.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Package: com.github.liuxboy.velocity.demo.domain <br>
@@ -16,14 +17,16 @@ public class User implements Serializable {
     private int id;
     private String name;
     private int age;
-
+    private double salary;
+    private Date birthday;
     public User() {
     }
 
-    public User(int id, String name, int age) {
+    public User(int id, String name, int age, double salary) {
         this.id = id;
         this.name = name;
         this.age = age;
+        this.salary = salary;
     }
 
     public int getId() {
@@ -50,12 +53,29 @@ public class User implements Serializable {
         this.age = age;
     }
 
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
     @Override
     public String toString() {
         final StringBuilder stbd = new StringBuilder("User{");
         stbd.append("\"id\":").append(id);
         stbd.append(",\"name\":\"").append(name).append('\"');
         stbd.append(",\"age\":").append(age);
+        stbd.append(",\"salary\":").append(salary);
         stbd.append('}');
         stbd.append(super.toString());
         return stbd.toString();

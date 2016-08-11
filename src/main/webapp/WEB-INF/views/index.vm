@@ -15,14 +15,18 @@
 					<th class="center">#springMessage('user.id')</th>
 					<th class="center">#springMessage('user.name')</th>
 					<th class="center">#springMessage('user.age')</th>
+                    <th class="center">薪水</th>
+                    <th class="center">生日</th>
 				</tr>
 			</thead>
 			<tbody>
 				#foreach( $item in $dataList)
-				<tr>
+				<tr align="center">
 					<td>$!item.id</td>
 					<td>$!item.name</td>
 					<td>$!item.age</td>
+                    <td>$!numberTool.currency($item.salary)</td> <!-- 数值格式化、国际化 -->
+                    <td>$!dateTool.format('yyyy-MM-dd HH:mm:ss',$!item.birthday)</td> <!-- 日期格式化、国际化 -->
 				</tr>
 				#end
 			</tbody>

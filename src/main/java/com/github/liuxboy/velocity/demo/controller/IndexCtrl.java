@@ -35,7 +35,7 @@ public class IndexCtrl {
      */
     @RequestMapping(value = "index")
     public String index(Model model) {
-        model.addAttribute(new User(1, "root", 100));
+        model.addAttribute(new User(1, "root", 100, 1940.9977));
         try {
             List<User> userList = userService.getUserList();
             if (CollectionUtils.isNotEmpty(userList)) {
