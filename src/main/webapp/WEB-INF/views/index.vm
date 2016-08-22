@@ -3,7 +3,7 @@
 	<head>
         <script language="javascript">
 			function query() {
-
+				alert();
             }
 		</script>
 	</head>
